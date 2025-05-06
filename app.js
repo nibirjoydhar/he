@@ -186,7 +186,7 @@ const App=() => {
             </header>
 
             {/* Hero Section */}
-            <section id="hero" className="min-h-screen flex items-center justify-center relative overflow-hidden pt-16 md:pt-20">
+            <section id="hero" className="min-h-screen flex items-center justify-center relative overflow-hidden">
                 <canvas id="hero-canvas" className="absolute inset-0"></canvas>
                 <div className="container mx-auto px-4 text-center z-10">
                     <img
@@ -217,7 +217,7 @@ const App=() => {
                         <a href="#book-me" className="btn btn-secondary text-base md:text-lg px-6 py-2">Hire Me</a>
                     </div>
 
-                    <div className="flex justify-center gap-3 md:gap-8">
+                    <div className="flex justify-center gap-4 md:gap-8">
                         {['linkedin', 'github', 'facebook', 'instagram', 'x', 'envelope', 'whatsapp'].map((platform) => {
                             const isEmail=platform==='envelope';
                             const isWhatsApp=platform==='whatsapp';
