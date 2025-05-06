@@ -217,7 +217,7 @@ const App=() => {
                         <a href="#book-me" className="btn btn-secondary text-base md:text-lg px-6 py-2">Hire Me</a>
                     </div>
 
-                    <div className="flex justify-center gap-5 md:gap-8">
+                    <div className="flex justify-center gap-3 md:gap-8">
                         {['linkedin', 'github', 'facebook', 'instagram', 'x', 'envelope', 'whatsapp'].map((platform) => {
                             const isEmail=platform==='envelope';
                             const isWhatsApp=platform==='whatsapp';
@@ -232,7 +232,7 @@ const App=() => {
 
                             return (
                                 <a key={platform} href={href} target="_blank" rel="noopener noreferrer">
-                                    <i className={`${iconPrefix} fa-${iconName} fa-2xl md:fa-3xl hover:text-green-400 transition-transform duration-300 hover:scale-125`}></i>
+                                    <i className={`${iconPrefix} fa-${iconName} fa-xl md:fa-2xl lg:fa-3xl hover:text-green-400 transition-transform duration-300 hover:scale-125`}></i>
                                 </a>
                             );
                         })}
@@ -240,11 +240,9 @@ const App=() => {
                 </div>
             </section>
 
-
             {/* About Section */}
             <section id="about" className="py-16 bg-black bg-opacity-90">
                 <div className="container mx-auto px-4">
-                    <h2 className="section-title">About Me</h2>
                     <div className="flex flex-col md:flex-row items-center gap-8">
                         <div className="w-full md:w-1/2">
                             <div className="carousel">
@@ -258,6 +256,8 @@ const App=() => {
                             </div>
                         </div>
                         <div className="w-full md:w-1/2 text-lg card">
+                            <h2 className="section-title">About Me</h2>
+
                             <p>I'm a final year CSE student at Jagannath University, passionate about full-stack development and problem-solving.</p>
                             <p>With 3000+ problems solved across platforms like Codeforces, LeetCode, and AtCoder, I actively compete and represent my university in contests.</p>
                             <p>I love building clean, scalable applications and enjoy mentoring, learning, and exploring the latest in tech.</p>
@@ -449,7 +449,6 @@ const App=() => {
                 </div>
             </section>
 
-
             {/* Footer */}
             <footer className="bg-black py-8">
                 <div className="container mx-auto px-4">
@@ -495,7 +494,6 @@ const App=() => {
                                 })}
                             </div>
                         </div>
-
                     </div>
                     <div className="mt-8 text-center">
                         <p>© 2025 myPortfolio. All Rights Reserved.</p>

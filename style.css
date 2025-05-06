@@ -11,12 +11,12 @@ body {
 }
 
 .section-title {
-    font-size: 2.5rem;
+    font-size: 2rem;
     font-weight: 800;
     color: #e0e0e0;
     text-transform: uppercase;
     text-align: center;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
     text-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
     position: relative;
 }
@@ -47,7 +47,7 @@ body {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 0.5rem 1.5rem;
+    padding: 0.5rem 1rem;
     border-radius: 50px;
     font-weight: 600;
     text-transform: uppercase;
@@ -93,14 +93,14 @@ body {
 }
 
 #hero {
-    padding-top: 4.5rem;
+    padding-top: 4rem;
     padding-bottom: 1rem;
 }
 
 #hero img {
     margin-bottom: 1rem;
-    width: 6rem;
-    height: 6rem;
+    width: 8rem;
+    height: 8rem;
 }
 
 #hero-canvas {
@@ -209,7 +209,7 @@ body {
 
 #book-me .btn-primary {
     padding: 0.75rem 2rem;
-    font-size: 1.125rem;
+    font-size: 1rem;
     text-shadow: 0 0 5px rgba(0, 255, 204, 0.5);
 }
 
@@ -236,13 +236,36 @@ body {
     }
 }
 
+@media (min-width: 640px) {
+    #hero {
+        padding-top: 4.5rem;
+    }
+    #hero img {
+        width: 10rem;
+        height: 10rem;
+    }
+    .section-title {
+        font-size: 2.25rem;
+    }
+}
+
 @media (min-width: 768px) {
     #hero {
         padding-top: 5rem;
     }
     #hero img {
-        width: 8rem;
-        height: 8rem;
+        width: 12rem;
+        height: 12rem;
+    }
+    .section-title {
+        font-size: 2.5rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    #hero img {
+        width: 10rem;
+        height: 10rem;
     }
 }
 
@@ -259,5 +282,19 @@ body {
     .book-me-container {
         min-height: 250px;
         padding: 1rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .section-title {
+        font-size: 1.5rem;
+    }
+    .btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.875rem;
+    }
+    #book-me .btn-primary {
+        padding: 0.5rem 1.5rem;
+        font-size: 0.875rem;
     }
 }
