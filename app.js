@@ -397,7 +397,6 @@ const App=() => {
                     <h2 className="section-title">Book a Meeting</h2>
                     <p className="text-lg mb-8 max-w-2xl mx-auto">Interested in collaborating or discussing a project? Schedule a 30-minute consultation to explore how I can help with your development needs.</p>
                     <a href="https://calendly.com/nibirjoydhar/30min" target="_blank" className="btn btn-primary text-lg px-8 py-3">Schedule a Consultation</a>
-                    <p className="text-sm mt-4 text-gray-400">Click the button above to book a meeting directly via Calendly.</p>
                 </div>
             </section>
 
