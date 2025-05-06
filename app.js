@@ -164,7 +164,7 @@ const App=() => {
             {/* Header */}
             <header className="fixed top-0 w-full bg-black bg-opacity-80 z-50">
                 <nav className="container mx-auto px-4 py-3 flex items-center justify-between">
-                    <a href="/" className="text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-pink-500">Nibir Joydhar</a>
+                    <a href="/Portfolio" className="text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-pink-500">Nibir Joydhar</a>
                     <div className="hidden md:flex space-x-6">
                         {['hero', 'about', 'skills', 'projects', 'achievements', 'online-judges', 'education', 'book-me', 'contact'].map(section => (
                             <a key={section} href={`#${section}`} className="nav-link text-sm">{section.charAt(0).toUpperCase()+section.slice(1)}</a>
