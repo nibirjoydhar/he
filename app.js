@@ -1,36 +1,36 @@
-const {useState, useEffect}=React;
+const { useState, useEffect } = React;
 
 // TypewriterText Component
-const TypewriterText=({texts, typeSpeed=100, eraseSpeed=50, delay=1500}) => {
-    const [currentTextIndex, setCurrentTextIndex]=useState(0);
-    const [displayText, setDisplayText]=useState('');
-    const [charIndex, setCharIndex]=useState(0);
-    const [isTyping, setIsTyping]=useState(true);
+const TypewriterText = ({ texts, typeSpeed = 100, eraseSpeed = 50, delay = 1500 }) => {
+    const [currentTextIndex, setCurrentTextIndex] = useState(0);
+    const [displayText, setDisplayText] = useState('');
+    const [charIndex, setCharIndex] = useState(0);
+    const [isTyping, setIsTyping] = useState(true);
 
     useEffect(() => {
-        const currentText=texts[currentTextIndex];
+        const currentText = texts[currentTextIndex];
 
         let timeout;
-        if(isTyping) {
-            if(charIndex<currentText.length) {
-                timeout=setTimeout(() => {
-                    setDisplayText((prev) => prev+currentText[charIndex]);
-                    setCharIndex((prev) => prev+1);
+        if (isTyping) {
+            if (charIndex < currentText.length) {
+                timeout = setTimeout(() => {
+                    setDisplayText((prev) => prev + currentText[charIndex]);
+                    setCharIndex((prev) => prev + 1);
                 }, typeSpeed);
             } else {
-                timeout=setTimeout(() => {
+                timeout = setTimeout(() => {
                     setIsTyping(false);
                 }, delay);
             }
         } else {
-            if(charIndex>0) {
-                timeout=setTimeout(() => {
+            if (charIndex > 0) {
+                timeout = setTimeout(() => {
                     setDisplayText((prev) => prev.slice(0, -1));
-                    setCharIndex((prev) => prev-1);
+                    setCharIndex((prev) => prev - 1);
                 }, eraseSpeed);
             } else {
-                timeout=setTimeout(() => {
-                    setCurrentTextIndex((prev) => (prev+1)%texts.length);
+                timeout = setTimeout(() => {
+                    setCurrentTextIndex((prev) => (prev + 1) % texts.length);
                     setIsTyping(true);
                     setCharIndex(0);
                     setDisplayText('');
@@ -49,11 +49,11 @@ const TypewriterText=({texts, typeSpeed=100, eraseSpeed=50, delay=1500}) => {
     );
 };
 
-const App=() => {
-    const [isMenuOpen, setIsMenuOpen]=useState(false);
-    const [currentSlide, setCurrentSlide]=useState(0);
+const App = () => {
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [currentSlide, setCurrentSlide] = useState(0);
 
-    const slides=[
+    const slides = [
         "images/carousul1.jpg",
         "images/carousul2.jpg",
         "images/carousul3.jpg",
@@ -92,71 +92,71 @@ const App=() => {
             });
         });
 
-        const scene=new THREE.Scene();
-        const camera=new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
-        const renderer=new THREE.WebGLRenderer({canvas: document.getElementById('hero-canvas'), alpha: true});
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('hero-canvas'), alpha: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
 
-        const particles=new THREE.BufferGeometry();
-        const particleCount=5000;
-        const posArray=new Float32Array(particleCount*3);
+        const particles = new THREE.BufferGeometry();
+        const particleCount = 5000;
+        const posArray = new Float32Array(particleCount * 3);
 
-        for(let i=0;i<particleCount*3;i++) {
-            posArray[i]=(Math.random()-0.5)*2000;
+        for (let i = 0; i < particleCount * 3; i++) {
+            posArray[i] = (Math.random() - 0.5) * 2000;
         }
 
         particles.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-        const material=new THREE.PointsMaterial({size: 0.005, color: 0x00ffcc});
-        const particleSystem=new THREE.Points(particles, material);
+        const material = new THREE.PointsMaterial({ size: 0.005, color: 0x00ffcc });
+        const particleSystem = new THREE.Points(particles, material);
         scene.add(particleSystem);
 
-        camera.position.z=5;
+        camera.position.z = 5;
 
-        const animate=() => {
+        const animate = () => {
             requestAnimationFrame(animate);
-            particleSystem.rotation.y+=0.001;
+            particleSystem.rotation.y += 0.001;
             renderer.render(scene, camera);
         };
         animate();
 
         window.addEventListener('resize', () => {
-            camera.aspect=window.innerWidth/window.innerHeight;
+            camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
             renderer.setSize(window.innerWidth, window.innerHeight);
         });
 
-        const interval=setInterval(() => {
-            setCurrentSlide((prev) => (prev+1)%slides.length);
+        const interval = setInterval(() => {
+            setCurrentSlide((prev) => (prev + 1) % slides.length);
         }, 4000);
 
         return () => clearInterval(interval);
     }, []);
 
-    const handleSubmit=(e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-        const form=e.target;
-        const formData=new FormData(form);
+        const form = e.target;
+        const formData = new FormData(form);
         fetch(form.action, {
             method: 'POST',
             body: formData,
-            headers: {'Accept': 'application/json'}
+            headers: { 'Accept': 'application/json' }
         })
             .then(res => res.json())
             .then(data => {
-                document.getElementById('contactResponse').innerHTML='<div className="text-green-400">Message sent successfully!</div>';
+                document.getElementById('contactResponse').innerHTML = '<div className="text-green-400">Message sent successfully!</div>';
                 form.reset();
             })
             .catch(err => {
-                document.getElementById('contactResponse').innerHTML='<div className="text-red-400">Something went wrong!</div>';
+                document.getElementById('contactResponse').innerHTML = '<div className="text-red-400">Something went wrong!</div>';
             });
     };
 
-    const prevSlide=() => {
-        setCurrentSlide((prev) => (prev-1+slides.length)%slides.length);
+    const prevSlide = () => {
+        setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
     };
 
-    const nextSlide=() => {
-        setCurrentSlide((prev) => (prev+1)%slides.length);
+    const nextSlide = () => {
+        setCurrentSlide((prev) => (prev + 1) % slides.length);
     };
 
     return (
@@ -167,18 +167,18 @@ const App=() => {
                     <a href="/he" className="text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-pink-500">Nibir Joydhar</a>
                     <div className="hidden md:flex space-x-6">
                         {['hero', 'about', 'skills', 'projects', 'achievements', 'online-judges', 'education', 'book-me', 'contact'].map(section => (
-                            <a key={section} href={`#${section}`} className="nav-link text-sm">{section.charAt(0).toUpperCase()+section.slice(1)}</a>
+                            <a key={section} href={`#${section}`} className="nav-link text-sm">{section.charAt(0).toUpperCase() + section.slice(1)}</a>
                         ))}
                     </div>
                     <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="md:hidden text-white">
-                        <i className={`fas ${isMenuOpen? 'fa-times':'fa-bars'} text-xl`}></i>
+                        <i className={`fas ${isMenuOpen ? 'fa-times' : 'fa-bars'} text-xl`}></i>
                     </button>
                 </nav>
-                {isMenuOpen&&(
+                {isMenuOpen && (
                     <div className="md:hidden bg-black bg-opacity-90">
                         {['hero', 'about', 'skills', 'projects', 'achievements', 'online-judges', 'education', 'book-me', 'contact'].map(section => (
                             <a key={section} href={`#${section}`} className="block px-4 py-2 nav-link text-sm" onClick={() => setIsMenuOpen(false)}>
-                                {section.charAt(0).toUpperCase()+section.slice(1)}
+                                {section.charAt(0).toUpperCase() + section.slice(1)}
                             </a>
                         ))}
                     </div>
@@ -219,16 +219,16 @@ const App=() => {
 
                     <div className="flex justify-center gap-4 md:gap-8">
                         {['linkedin', 'github', 'facebook', 'instagram', 'x', 'envelope', 'whatsapp'].map((platform) => {
-                            const isEmail=platform==='envelope';
-                            const isWhatsApp=platform==='whatsapp';
-                            const href=isEmail
+                            const isEmail = platform === 'envelope';
+                            const isWhatsApp = platform === 'whatsapp';
+                            const href = isEmail
                                 ? 'mailto:nibirjoydhar@gmail.com'
-                                :isWhatsApp
+                                : isWhatsApp
                                     ? 'https://wa.me/8801521546883'
-                                    :`https://${platform}.com/nibirjoydhar`;
+                                    : `https://${platform}.com/nibirjoydhar`;
 
-                            const iconPrefix=isEmail? 'fas':'fab';
-                            const iconName=platform==='x'? 'twitter':platform;
+                            const iconPrefix = isEmail ? 'fas' : 'fab';
+                            const iconName = platform === 'x' ? 'twitter' : platform;
 
                             return (
                                 <a key={platform} href={href} target="_blank" rel="noopener noreferrer">
@@ -246,9 +246,9 @@ const App=() => {
                     <div className="flex flex-col md:flex-row items-center gap-8">
                         <div className="w-full md:w-1/2">
                             <div className="carousel">
-                                <div className="carousel-inner" style={{transform: `translateX(-${currentSlide*100}%)`}}>
+                                <div className="carousel-inner" style={{ transform: `translateX(-${currentSlide * 100}%)` }}>
                                     {slides.map((slide, index) => (
-                                        <img key={index} src={slide} className="carousel-item" alt={`Slide ${index+1}`} />
+                                        <img key={index} src={slide} className="carousel-item" alt={`Slide ${index + 1}`} />
                                     ))}
                                 </div>
                                 <button className="carousel-control-prev" onClick={prevSlide}><i className="fas fa-chevron-left"></i></button>
@@ -272,12 +272,12 @@ const App=() => {
                     <h2 className="section-title">Skills</h2>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                         {[
-                            {title: 'Languages', icon: 'code', items: ['C/C++', 'Java', 'Python', 'PHP', 'JavaScript', 'TypeScript']},
-                            {title: 'Frameworks & Libraries', icon: 'layer-group', items: ['Laravel', 'React', 'Express.js', 'Django', 'Bootstrap, Tailwind CSS', 'jQuery']},
-                            {title: 'Databases', icon: 'database', items: ['MySQL', 'MongoDB', 'Firebase', 'SQL']},
-                            {title: 'DevOps & Tools', icon: 'tools', items: ['Git, GitHub', 'Docker, Kubernetes', 'CI/CD pipelines']},
-                            {title: 'OS & IDEs', icon: 'laptop-code', items: ['Ubuntu, Lubuntu, Windows 7/10/11', 'VS Code, Sublime Text, CodeBlocks', 'NetBeans, PyCharm']},
-                            {title: 'Other Skills', icon: 'user-check', items: ['Problem Solving (2000+ problems solved)', 'Leadership, Teamwork, Communication', 'Photo & Video Editing, Graphics Design']}
+                            { title: 'Languages', icon: 'code', items: ['C/C++', 'Java', 'Python', 'PHP', 'JavaScript', 'TypeScript'] },
+                            { title: 'Frameworks & Libraries', icon: 'layer-group', items: ['Laravel', 'React', 'Express.js', 'Django', 'Bootstrap, Tailwind CSS', 'jQuery'] },
+                            { title: 'Databases', icon: 'database', items: ['MySQL', 'MongoDB', 'Firebase', 'SQL'] },
+                            { title: 'DevOps & Tools', icon: 'tools', items: ['Git, GitHub', 'Docker, Kubernetes', 'CI/CD pipelines'] },
+                            { title: 'OS & IDEs', icon: 'laptop-code', items: ['Ubuntu, Lubuntu, Windows 7/10/11', 'VS Code, Sublime Text, CodeBlocks', 'NetBeans, PyCharm'] },
+                            { title: 'Other Skills', icon: 'user-check', items: ['Problem Solving (2000+ problems solved)', 'Leadership, Teamwork, Communication', 'Photo & Video Editing, Graphics Design'] }
                         ].map(skill => (
                             <div key={skill.title} className="card">
                                 <h3><i className={`fas fa-${skill.icon} mr-2`}></i>{skill.title}</h3>
@@ -291,27 +291,27 @@ const App=() => {
             </section>
 
             {/* Projects Section */}
-            <section id="projects" className="py-16 parallax" style={{backgroundImage: "url('images/bg-projects.jpg')"}}>
+            <section id="projects" className="py-16 parallax" style={{ backgroundImage: "url('images/bg-projects.jpg')" }}>
                 <div className="container mx-auto px-4">
                     <h2 className="section-title">Projects</h2>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                         {[
-                            {title: 'Job Board', desc: 'Cloud-based job platform with login, profiles, post/apply jobs.', tech: 'PHP, MySQL, Bootstrap, Docker', demo: 'http://13.52.231.122:8080', repo: 'https://github.com/nibirjoydhar/job-board'},
-                            {title: 'Crop Recommendation', desc: 'Recommends crops based on soil and weather using ML.', tech: 'Python (Flask), Docker', demo: 'http://13.239.37.214:5000/', repo: 'https://github.com/nibirjoydhar/Crop_Recommendation'},
-                            {title: 'Todo List', desc: 'Simple MERN-based todo list with mark/delete features.', tech: 'React, Node.js, MongoDB', demo: 'http://52.62.105.224:3000/', repo: 'https://github.com/nibirjoydhar/TodoList'},
-                            {title: 'Ride Me', desc: 'Instant ride-booking app with surge pricing, ratings, and safety features.', tech: 'Java, Firebase'},
-                            {title: 'Organic Food', desc: 'Pure organic food delivery platform with rating and payment.', tech: 'PHP, MySQL, JavaScript'},
-                            {title: 'Smart Lock', desc: 'Fingerprint + mobile-controlled smart lock system.', tech: 'Arduino, Java, Solenoid Lock'},
-                            {title: 'Line Following Robot', desc: 'Autonomous bot that follows lines and avoids obstacles.', tech: 'Arduino Uno, IR Sensors'}
+                            { title: 'Job Board', desc: 'Cloud-based job platform with login, profiles, post/apply jobs.', tech: 'PHP, MySQL, Bootstrap, Docker', demo: 'http://13.52.231.122:8080', repo: 'https://github.com/nibirjoydhar/job-board' },
+                            { title: 'Crop Recommendation', desc: 'Recommends crops based on soil and weather using ML.', tech: 'Python (Flask), Docker', demo: 'http://13.239.37.214:5000/', repo: 'https://github.com/nibirjoydhar/Crop_Recommendation' },
+                            { title: 'Todo List', desc: 'Simple MERN-based todo list with mark/delete features.', tech: 'React, Node.js, MongoDB', demo: 'http://52.62.105.224:3000/', repo: 'https://github.com/nibirjoydhar/TodoList' },
+                            { title: 'Ride Me', desc: 'Instant ride-booking app with surge pricing, ratings, and safety features.', tech: 'Java, Firebase' },
+                            { title: 'Organic Food', desc: 'Pure organic food delivery platform with rating and payment.', tech: 'PHP, MySQL, JavaScript' },
+                            { title: 'Smart Lock', desc: 'Fingerprint + mobile-controlled smart lock system.', tech: 'Arduino, Java, Solenoid Lock' },
+                            { title: 'Line Following Robot', desc: 'Autonomous bot that follows lines and avoids obstacles.', tech: 'Arduino Uno, IR Sensors' }
                         ].map(project => (
                             <div key={project.title} className="card">
                                 <h3>{project.title}</h3>
                                 <p>{project.desc}</p>
                                 <p><strong>Tech:</strong> {project.tech}</p>
-                                {(project.demo||project.repo)&&(
+                                {(project.demo || project.repo) && (
                                     <div className="flex gap-4">
-                                        {project.demo&&<a href={project.demo} target="_blank" className="text-green-400 hover:underline">Live Demo</a>}
-                                        {project.repo&&<a href={project.repo} target="_blank" className="text-green-400 hover:underline">Git Repo</a>}
+                                        {project.demo && <a href={project.demo} target="_blank" className="text-green-400 hover:underline">Live Demo</a>}
+                                        {project.repo && <a href={project.repo} target="_blank" className="text-green-400 hover:underline">Git Repo</a>}
                                     </div>
                                 )}
                             </div>
@@ -326,20 +326,20 @@ const App=() => {
                     <h2 className="section-title">Achievements</h2>
                     <div className="max-w-3xl mx-auto">
                         {[
-                            {title: '🥇 JnU Intra Programming Contest 2024', desc: 'Champion', link: 'https://toph.co/contests/training/pefv6lt/standings'},
-                            {title: '🥇 CSE Sports Carnival 2023', desc: 'Champion', link: 'https://vjudge.net/contest/594718#rank'},
-                            {title: '🥈 IEEEXtreme 17.0', desc: '2nd in Bangladesh (Global 556) – Team: JnUxTeam', link: 'https://ieeextreme.org/ieeextreme-17-0-ranking/'},
-                            {title: '🏅 IEEEXtreme 18.0', desc: '4th in Bangladesh (Global 420) – Team: JnUxTeam', link: 'https://ieeextreme.org/ieeextreme-18-0-ranking/'},
-                            {title: '🏅 IUT National ICT Fest 2024', desc: '27th – Team: JnuXTeam', link: 'https://toph.co/c/iut-11th-national-ict-fest-2024/standings'},
-                            {title: '🏅 BUET Inter University Programming Contest 2023', desc: '49th – Team: JnU_ABC', link: 'https://toph.co/c/buet-inter-university-2023/standings'},
-                            {title: '🏅 BUET Inter University Programming Contest 2024', desc: '54th – Team: JnU_Shomonnoyok', link: 'https://toph.co/c/inter-university-buet-cse-fest-2024/standings'},
-                            {title: '🏅 ICPC Dhaka Regional 2023', desc: '99th – Team: JnU_TLE', link: 'https://bapsoj.org/contests/icpc-dhaka-regional-site-2023/standings'},
-                            {title: '📐 National Math Olympiad 2023', desc: 'Participated'}
+                            { title: '🥇 JnU Intra Programming Contest 2024', desc: 'Champion', link: 'https://toph.co/contests/training/pefv6lt/standings' },
+                            { title: '🥇 CSE Sports Carnival 2023', desc: 'Champion', link: 'https://vjudge.net/contest/594718#rank' },
+                            { title: '🥈 IEEEXtreme 17.0', desc: '2nd in Bangladesh (Global 556) – Team: JnUxTeam', link: 'https://ieeextreme.org/ieeextreme-17-0-ranking/' },
+                            { title: '🏅 IEEEXtreme 18.0', desc: '4th in Bangladesh (Global 420) – Team: JnUxTeam', link: 'https://ieeextreme.org/ieeextreme-18-0-ranking/' },
+                            { title: '🏅 IUT National ICT Fest 2024', desc: '27th – Team: JnuXTeam', link: 'https://toph.co/c/iut-11th-national-ict-fest-2024/standings' },
+                            { title: '🏅 BUET Inter University Programming Contest 2023', desc: '49th – Team: JnU_ABC', link: 'https://toph.co/c/buet-inter-university-2023/standings' },
+                            { title: '🏅 BUET Inter University Programming Contest 2024', desc: '54th – Team: JnU_Shomonnoyok', link: 'https://toph.co/c/inter-university-buet-cse-fest-2024/standings' },
+                            { title: '🏅 ICPC Dhaka Regional 2023', desc: '99th – Team: JnU_TLE', link: 'https://bapsoj.org/contests/icpc-dhaka-regional-site-2023/standings' },
+                            { title: '📐 National Math Olympiad 2023', desc: 'Participated' }
                         ].map(achievement => (
                             <div key={achievement.title} className="timeline-item">
                                 <h3>{achievement.title}</h3>
                                 <p>{achievement.desc}</p>
-                                {achievement.link&&<a href={achievement.link} target="_blank" className="btn btn-primary">View Standing</a>}
+                                {achievement.link && <a href={achievement.link} target="_blank" className="btn btn-primary">View Standing</a>}
                             </div>
                         ))}
                     </div>
@@ -347,22 +347,22 @@ const App=() => {
             </section>
 
             {/* Online Judges Section */}
-            <section id="online-judges" className="py-16 parallax" style={{backgroundImage: "url('images/bg-judges.jpg')"}}>
+            <section id="online-judges" className="py-16 parallax" style={{ backgroundImage: "url('images/bg-judges.jpg')" }}>
                 <div className="container mx-auto px-4">
                     <h2 className="section-title">Online Judges</h2>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                         {[
-                            {title: 'Codeforces', icon: 'code', desc: 'Max Rating: <strong>1580</strong> (Specialist)', link: 'https://codeforces.com/profile/nibirjoydhar', color: 'text-green-400'},
-                            {title: 'LeetCode', icon: 'terminal', desc: '~800+ Problems Solved', link: 'https://leetcode.com/nibirjoydhar', color: 'text-yellow-400'},
-                            {title: 'CodeChef', icon: 'laptop-code', desc: 'Max Rating: <strong>4★</strong>', link: 'https://www.codechef.com/users/nibirjoydhar', color: 'text-pink-400'},
-                            {title: 'Coding Ninjas', icon: 'user-graduate', desc: 'Max Rating: <strong>2439</strong>', link: 'https://www.codingninjas.com/studio/profile/nibirjoydhar', color: 'text-blue-400'},
-                            {title: 'Toph', icon: 'code', desc: '~300+ Problems Solved', link: 'https://toph.co/u/nibirjoydhar', color: 'text-cyan-400'},
-                            {title: 'LightOJ', icon: 'laptop-code', desc: '~200+ Problems Solved', link: 'https://lightoj.com/user/nibirjoydhar', color: 'text-gray-400'}
+                            { title: 'Codeforces', icon: 'code', desc: 'Max Rating: <strong>1580</strong> (Specialist)', link: 'https://codeforces.com/profile/nibirjoydhar', color: 'text-green-400' },
+                            { title: 'LeetCode', icon: 'terminal', desc: '~800+ Problems Solved', link: 'https://leetcode.com/nibirjoydhar', color: 'text-yellow-400' },
+                            { title: 'CodeChef', icon: 'laptop-code', desc: 'Max Rating: <strong>4★</strong>', link: 'https://www.codechef.com/users/nibirjoydhar', color: 'text-pink-400' },
+                            { title: 'Coding Ninjas', icon: 'user-graduate', desc: 'Max Rating: <strong>2439</strong>', link: 'https://www.codingninjas.com/studio/profile/nibirjoydhar', color: 'text-blue-400' },
+                            { title: 'Toph', icon: 'code', desc: '~300+ Problems Solved', link: 'https://toph.co/u/nibirjoydhar', color: 'text-cyan-400' },
+                            { title: 'LightOJ', icon: 'laptop-code', desc: '~200+ Problems Solved', link: 'https://lightoj.com/user/nibirjoydhar', color: 'text-gray-400' }
                         ].map(judge => (
                             <div key={judge.title} className="card text-center">
                                 <i className={`fas fa-${judge.icon} fa-3x ${judge.color} mb-4`}></i>
                                 <h3>{judge.title}</h3>
-                                <p dangerouslySetInnerHTML={{__html: judge.desc}}></p>
+                                <p dangerouslySetInnerHTML={{ __html: judge.desc }}></p>
                                 <a href={judge.link} target="_blank" className="btn btn-primary">Visit</a>
                             </div>
                         ))}
@@ -376,15 +376,44 @@ const App=() => {
                     <h2 className="section-title">Education & Organization</h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         {[
-                            {title: 'B.Sc. in Computer Science & Engineering', icon: 'university', desc: 'Jagannath University, Dhaka<br>CGPA: 3.53 (till 4-1)', color: 'text-green-400'},
-                            {title: 'Member, Competitive Programming Club', icon: 'users', desc: 'Jagannath University<br>Since 2020', color: 'text-blue-400'},
-                            {title: 'Member, IEEE Student Branch', icon: 'microchip', desc: 'Jagannath University<br>Since 2023', color: 'text-yellow-400'},
-                            {title: 'Team Leader, JnU_TLE', icon: 'code', desc: 'ICPC Dhaka Regional 2023<br>Team: JnU_TLE', color: 'text-pink-400'}
+                            { title: 'B.Sc. in Computer Science & Engineering', icon: 'university', desc: 'Jagannath University, Dhaka<br>CGPA: 3.53 (till 4-1)', color: 'text-green-400' },
+                            { title: 'Member, Competitive Programming Club', icon: 'users', desc: 'Jagannath University<br>Since 2020', color: 'text-blue-400' },
+                            { title: 'Member, IEEE Student Branch', icon: 'microchip', desc: 'Jagannath University<br>Since 2023', color: 'text-yellow-400' },
+                            { title: 'Team Leader, JnU_TLE', icon: 'code', desc: 'ICPC Dhaka Regional 2023<br>Team: JnU_TLE', color: 'text-pink-400' }
                         ].map(edu => (
                             <div key={edu.title} className="card">
                                 <i className={`fas fa-${edu.icon} fa-2x ${edu.color} mb-4`}></i>
                                 <h3>{edu.title}</h3>
-                                <p dangerouslySetInnerHTML={{__html: edu.desc}}></p>
+                                <p dangerouslySetInnerHTML={{ __html: edu.desc }}></p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* Research Work Section */}
+            <section id="research" className="py-16 bg-black bg-opacity-90">
+                <div className="container mx-auto px-8"> {/* Increased from px-4 to px-8 */}
+                    <h2 className="section-title">Research Work</h2>
+                    <div className="grid grid-cols-1 gap-6">
+                        {[
+                            {
+                                title: 'Vulnerability Detection in C/C++ Source Code Using VulBERTa',
+                                icon: 'shield-alt',
+                                desc: `
+                        <strong>Objective:</strong> Developing an advanced machine learning model to detect vulnerabilities in C/C++ source code, enhancing software security and reliability.<br>
+                        <strong>Methodology:</strong> Applied hybrid tokenization techniques on the Vuldeepecker and Draper datasets to preprocess and analyze source code. Fine-tuned RoBERTa-based models, including Multi-Layer Perceptron (MLP) and Convolutional Neural Network (CNN) architectures, to improve detection accuracy and efficiency.<br>
+                        <strong>Technologies:</strong> Python, PyTorch, Transformers, TensorFlow, Clang, MLflow.<br>
+                        <strong>Impact:</strong> Aims to contribute to secure software development by automating vulnerability detection, reducing manual auditing efforts, and improving the robustness of critical systems.<br>
+                        <strong>Status:</strong> Ongoing research with preliminary results showing improved precision in identifying common vulnerabilities such as buffer overflows and memory leaks.
+                    `,
+                                color: 'text-purple-400'
+                            }
+                        ].map(research => (
+                            <div key={research.title} className="card">
+                                <i className={`fas fa-${research.icon} fa-2x ${research.color} mb-4`}></i>
+                                <h3>{research.title}</h3>
+                                <p className="text-justify" dangerouslySetInnerHTML={{ __html: research.desc }}></p>
                             </div>
                         ))}
                     </div>
@@ -462,7 +491,7 @@ const App=() => {
                                 ].map(section => (
                                     <li key={section}>
                                         <a href={`#${section}`} className="hover:text-green-400">
-                                            {section.charAt(0).toUpperCase()+section.slice(1)}
+                                            {section.charAt(0).toUpperCase() + section.slice(1)}
                                         </a>
                                     </li>
                                 ))}
@@ -481,10 +510,10 @@ const App=() => {
                             <h3 className="text-xl font-bold mb-4 text-green-400">Follow Me</h3>
                             <div className="flex gap-4">
                                 {['linkedin', 'github', 'facebook', 'instagram', 'twitter', 'whatsapp'].map(platform => {
-                                    const url=
-                                        platform==='whatsapp'
+                                    const url =
+                                        platform === 'whatsapp'
                                             ? 'https://wa.me/8801521546883'
-                                            :`https://${platform}.com/nibirjoydhar`;
+                                            : `https://${platform}.com/nibirjoydhar`;
 
                                     return (
                                         <a key={platform} href={url} target="_blank" rel="noopener noreferrer">
