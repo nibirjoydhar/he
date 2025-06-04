@@ -296,22 +296,66 @@ const App = () => {
                     <h2 className="section-title">Projects</h2>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                         {[
-                            { title: 'Job Board', desc: 'Cloud-based job platform with login, profiles, post/apply jobs.', tech: 'PHP, MySQL, Bootstrap, Docker', demo: 'http://13.52.231.122:8080', repo: 'https://github.com/nibirjoydhar/job-board' },
-                            { title: 'Crop Recommendation', desc: 'Recommends crops based on soil and weather using ML.', tech: 'Python (Flask), Docker', demo: 'http://13.239.37.214:5000/', repo: 'https://github.com/nibirjoydhar/Crop_Recommendation' },
-                            { title: 'Todo List', desc: 'Simple MERN-based todo list with mark/delete features.', tech: 'React, Node.js, MongoDB', demo: 'http://52.62.105.224:3000/', repo: 'https://github.com/nibirjoydhar/TodoList' },
-                            { title: 'Ride Me', desc: 'Instant ride-booking app with surge pricing, ratings, and safety features.', tech: 'Java, Firebase' },
-                            { title: 'Organic Food', desc: 'Pure organic food delivery platform with rating and payment.', tech: 'PHP, MySQL, JavaScript' },
-                            { title: 'Smart Lock', desc: 'Fingerprint + mobile-controlled smart lock system.', tech: 'Arduino, Java, Solenoid Lock' },
-                            { title: 'Line Following Robot', desc: 'Autonomous bot that follows lines and avoids obstacles.', tech: 'Arduino Uno, IR Sensors' }
+                            {
+                                title: 'Job Board Platform',
+                                desc: 'Cloud-based job portal with role-based access, including registration, login, profiles, dashboards, and job posting/searching/applying features.',
+                                tech: 'PHP, Bootstrap, MySQL, Docker',
+                                repo: 'https://github.com/nibirjoydhar/job-board'
+                            },
+                            {
+                                title: 'CodeJudge',
+                                desc: 'Competitive coding platform allowing users to solve problems, view submissions, create contests, and code in multiple languages with an integrated editor.',
+                                tech: 'Laravel, Tailwind CSS, MySQL',
+                                repo: 'https://github.com/nibirjoydhar/CodeJudge'
+                            },
+                            {
+                                title: 'ResumeAnalyzer',
+                                desc: 'AI-powered resume analyzer with features for resume upload, text extraction, skill matching, data storage, and dashboard.',
+                                tech: 'MERN Stack (MongoDB, Express.js, React, Node.js)',
+                                repo: 'https://github.com/nibirjoydhar/ResumeAnalyzer'
+                            },
+                            {
+                                title: 'Ride Me',
+                                desc: 'Android ride-hailing app with features for booking rides, location search, surge pricing, ratings, safety, and profile updates.',
+                                tech: 'Java, Firebase',
+                                repo: 'https://github.com/nibirjoydhar/RideMe'
+                            },
+                            {
+                                title: 'Organic Food',
+                                desc: 'Web app for selling and delivering organic food, featuring shopping, order tracing, reviews, ratings, online payments, and profile updates.',
+                                tech: 'PHP, CSS, MySQL',
+                                repo: 'https://github.com/nibirjoydhar/OrganicFood'
+                            },
+                            {
+                                title: 'Crop Recommendation',
+                                desc: 'Dockerized ML project using Flask to recommend the best crop based on soil and weather conditions.',
+                                tech: 'Python (Flask), Machine Learning, Docker',
+                                repo: 'https://github.com/nibirjoydhar/Crop_Recommendation'
+                            },
+                            {
+                                title: 'Todo List',
+                                desc: 'Simple MERN-based todo list with features for marking and deleting tasks.',
+                                tech: 'React, Node.js, MongoDB',
+                                repo: 'https://github.com/nibirjoydhar/TodoList'
+                            },
+                            {
+                                title: 'Smart Lock',
+                                desc: 'Fingerprint and mobile-controlled smart lock system.',
+                                tech: 'Arduino, Java, Solenoid Lock',
+                            },
+                            {
+                                title: 'Line Following Robot',
+                                desc: 'Autonomous bot that follows lines and avoids obstacles.',
+                                tech: 'Arduino Uno, IR Sensors',
+                            }
                         ].map(project => (
                             <div key={project.title} className="card">
                                 <h3>{project.title}</h3>
                                 <p>{project.desc}</p>
                                 <p><strong>Tech:</strong> {project.tech}</p>
-                                {(project.demo || project.repo) && (
+                                {project.repo && (
                                     <div className="flex gap-4">
-                                        {project.demo && <a href={project.demo} target="_blank" className="text-green-400 hover:underline">Live Demo</a>}
-                                        {project.repo && <a href={project.repo} target="_blank" className="text-green-400 hover:underline">Git Repo</a>}
+                                        <a href={project.repo} target="_blank" className="text-green-400 hover:underline">Git Repo</a>
                                     </div>
                                 )}
                             </div>
