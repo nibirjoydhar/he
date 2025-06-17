@@ -82,6 +82,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 Nibir Joydhar
 
-- 📧 Email: [nibirjoydhar@gmail.com](mailto:nibirjoydhar@gmail.com)
-- 💼 LinkedIn: [linkedin.com/in/nibirjoydhar](https://linkedin.com/in/nibirjoydhar)
-- 🌐 Portfolio: [nibirjoydhar.github.io/he-portfolio](https://nibirjoydhar.github.io/he-portfolio)
+- Email: [nibirjoydhar@gmail.com](mailto:nibirjoydhar@gmail.com)
+- LinkedIn: [linkedin.com/in/nibirjoydhar](https://linkedin.com/in/nibirjoydhar)
+- Portfolio: [nibirjoydhar.github.io/he-portfolio](https://nibirjoydhar.github.io/he-portfolio)
